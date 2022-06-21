@@ -7,9 +7,3 @@ resource "aws_eip" "nat_gateway" {
     Name = "${aws_vpc.this.tags.Name}-nat-gateway-${each.key}"
   }
 }
-
-locals {
-  nat_gateway_azs = var.single_nat_gateway ? {
-    keys(var.azs)[0] = values(var.azs)[0]
-  } : var.azs
-}

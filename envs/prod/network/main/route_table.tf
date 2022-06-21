@@ -33,3 +33,10 @@ resource "aws_route" "nat_gateway_private" {
   nat_gateway_id = aws_nat_gateway.this[var.single_nat_gateway ? keys(var.azs)[0] : each.key].id
   route_table_id = aws_route_table.private[each.key].id
 }
+
+resource "aws_route_table_association" "private" {
+  for_each = var.azs
+
+  route_table_id = aws_route_table.private[each.key].id
+  subnet_id      = aws_subnet.private[each.key].id
+}
